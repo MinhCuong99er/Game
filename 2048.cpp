@@ -5,24 +5,31 @@
 #include <conio.h>
 #include <time.h>
 #include <math.h>
+#include <dos.h>
+
 using namespace std;
 
-const string diem[14] = {"    ", "  2 ", "  4 ", "  8 ", " 16 ", " 32 ", " 64 ", " 128", " 256", " 512", "1024", "2048", "4096", "8192"};
-
-void PrintLogo ();
 void HuongDan();
 void gotoxy(int x, int y);
+int generateRandomNumber();
+
+const string diem[14] = {"    ", "  2 ", "  4 ", "  8 ", " 16 ", " 32 ", " 64 ", " 128", " 256", " 512", "1024", "2048", "4096", "8192"};
+const string Logo =
+". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .\n"
+". . . 2 2 2 . . . . . 0 0 0 . . . . . . . . 4 4 . . . . 8 8 8 8 8 . . . . .\n"
+". . 2 . . . 2 . . . 0 . . . 0 . . . . . . 4 . 4 . . . 8 . . . . . 8 . . . .\n"
+". . . . . . 2 . . 0 . . . . . 0 . . . . 4 . . 4 . . . 8 . . . . . 8 . . . .\n"
+". . . . . 2 . . . 0 . . . . . 0 . . . 4 . . . 4 . . . . 8 8 8 8 8 . . . . .\n"
+". . . . 2 . . . . 0 . . . . . 0 . . 4 4 4 4 4 4 4 . . 8 . . . . . 8 . . . .\n"
+". . . 2 . . . . . . 0 . . . 0 . . . . . . . . 4 . . . 8 . . . . . 8 . . . .\n"
+". . 2 2 2 2 2 . . . . 0 0 0 . . . . . . . . . 4 . . . . 8 8 8 8 8 . . . . .\n"
+". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .\n";
 
 int main()
 {
-    int score, highScore;
-    int Matrix[4][4];
-    HuongDan();
-}
-
-void PrintLogo ()
-{
-
+    	HuongDan();
+	delay(100);
+	system("cls");
 }
 
 void HuongDan()
@@ -36,4 +43,16 @@ void HuongDan()
 		 << "\t-Co gang dat duoc o 2048 !!! (^_^)\n\n\n";
 }
 
-
+void gotoxy(int x,int y)
+{
+	HANDLE hConsoleOutput;
+	COORD Cursor_an_Pos = { x,y};
+	hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleCursorPosition(hConsoleOutput , Cursor_an_Pos);
+}
+int generateRandomNumber()
+{
+    int k= rand() % 50 + 1;
+    if (k%3==0) return 4;
+    else return 2;
+}
