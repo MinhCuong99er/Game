@@ -1,17 +1,12 @@
 #include <iostream>
-#include <cstdlib>
-#include <windows.h>
-#include <fstream>
 #include <conio.h>
-#include <time.h>
-#include <math.h>
-#include <dos.h>
 
 using namespace std;
 
 void HuongDan();
 void gotoxy(int x, int y);
 int generateRandomNumber();
+void DrawTheFrame();
 
 const string diem[14] = {"    ", "  2 ", "  4 ", "  8 ", " 16 ", " 32 ", " 64 ", " 128", " 256", " 512", "1024", "2048", "4096", "8192"};
 const string Logo =
@@ -27,12 +22,12 @@ const string Logo =
 
 int main()
 {
-    	HuongDan();
+    	Guide();
 	delay(100);
 	system("cls");
 }
 
-void HuongDan()
+void Guide()
 {
 	cout << "Huong dan:\n\n\t-Su dung cac nut dieu huong de di chuyen:\n" << endl
 		 << "\t\t+Len:\t"<< (char)24 << endl << endl
