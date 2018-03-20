@@ -45,6 +45,78 @@ void gotoxy(int x,int y)
 	hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleCursorPosition(hConsoleOutput , Cursor_an_Pos);
 }
+void DrawTheFrame()
+{
+    for(int i=0;i<=20;i++)  {
+        for(int j=0;j<=40;j++)  {
+            if(i==0 && j==0)
+            {
+                gotoxy(j,i);
+                cout<<char(-55);
+            }
+            else if(i==20 && j==0)
+            {
+                gotoxy(j,i);
+                cout<<char(-56);
+            }
+            else if(i==0 && j==40)
+            {
+                gotoxy(j,i);
+                cout<<char(-69);
+            }
+            else if(i==20&&j==40)
+            {
+                gotoxy(j,i);
+                cout<<char(-68);
+            }
+            else if((i==5 || i==10 || i==15) && j==0)
+            {
+                gotoxy(j,i);
+                cout<<char(-52);
+            }
+            else if((i==5 || i==10 || i==15) && j==40)
+            {
+                gotoxy(j,i);
+                cout<<char(-71);
+            }
+            else if(i==0&&(j==10||j==20||j==30))
+            {
+                gotoxy(j,i);
+                cout<<char(-53);
+            }
+            else if(i==20 && (j==10 || j==20 || j==30))
+            {
+                gotoxy(j,i);
+                cout<<char(-54);
+            }
+            else if((i==5 || i==10 || i==15) && ( j==10 || j==20 || j==30))
+            {
+                gotoxy(j,i);
+                cout<<char(-50);
+            }
+            else if(i==5 || i==10 || i==15)
+            {
+                gotoxy(j,i);
+                cout<<char(-51);
+            }
+            else if(i==0 || i==20)
+            {
+                gotoxy(j,i);
+                cout<<char(-51);
+            }
+            else if(j==10 || j==20 || j==30)
+            {
+                gotoxy(j,i);
+                cout<<char(-70);
+            }
+            else if(j==0 || j==40)
+            {
+                gotoxy(j,i);
+                cout<<char(-70);
+            }
+        }
+    }
+}
 int generateRandomNumber()
 {
     int k= rand() % 50 + 1;
