@@ -19,6 +19,7 @@ const string Logo =
 ". . . 2 . . . . . . 0 . . . 0 . . . . . . . . 4 . . . 8 . . . . . 8 . . . .\n"
 ". . 2 2 2 2 2 . . . . 0 0 0 . . . . . . . . . 4 . . . . 8 8 8 8 8 . . . . .\n"
 ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .\n";
+". . . . . . . . . . . . Press any key to continue . . . . . . . . . . . . .\n";
 
 int main()
 {
@@ -29,13 +30,14 @@ int main()
 
 void Guide()
 {
-	cout << "Huong dan:\n\n\t-Su dung cac nut dieu huong de di chuyen:\n" << endl
-		 << "\t\t+Len:\t"<< (char)24 << endl << endl
-		 << "\t\t+Xuong:\t"<< (char)25 << endl << endl
-		 << "\t\t+Phai:\t" << (char)26 << endl << endl
-		 << "\t\t+Trai:\t"<< (char)27 << endl << endl
-		 << "\t\t--> Nhan ESC de thoat tro choi!\n\n"
-		 << "\t-Co gang dat duoc o 2048 !!! (^_^)\n\n\n";
+	cout << "\t\t\tGame instructions:\n\n"
+		 << "\t<!> Use the navigation buttons to move:\n\n"
+		 << "\t\t+ Up:    "<< (char)24 <<"\n\n"
+		 << "\t\t+ Down:  "<< (char)25 <<"\n\n"
+		 << "\t\t+ Right: "<< (char)26 <<"\n\n"
+		 << "\t\t+ Left:  "<< (char)27 << "\n\n"
+		 << "\t<!> Press ESC to exit the game.\n\n"
+		 << "\t\t\tGood luck !!! (^_^)\n\n\n";
 }
 
 void gotoxy(int x,int y)
