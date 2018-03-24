@@ -1,14 +1,9 @@
-#include <iostream>
-#include <conio.h>
-
+#include<iostream>
+#include<conio.h>
+#include<windows.h>
+#include<ctime>
 using namespace std;
-
-void HuongDan();
-void gotoxy(int x, int y);
-int generateRandomNumber();
-void DrawTheFrame();
-
-const string diem[14] = {"    ", "  2 ", "  4 ", "  8 ", " 16 ", " 32 ", " 64 ", " 128", " 256", " 512", "1024", "2048", "4096", "8192"};
+int boardGame[4][4]={0};
 const string Logo =
 ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .\n"
 ". . . 2 2 2 . . . . . 0 0 0 . . . . . . . . 4 4 . . . . 8 8 8 8 8 . . . . .\n"
@@ -18,100 +13,108 @@ const string Logo =
 ". . . . 2 . . . . 0 . . . . . 0 . . 4 4 4 4 4 4 4 . . 8 . . . . . 8 . . . .\n"
 ". . . 2 . . . . . . 0 . . . 0 . . . . . . . . 4 . . . 8 . . . . . 8 . . . .\n"
 ". . 2 2 2 2 2 . . . . 0 0 0 . . . . . . . . . 4 . . . . 8 8 8 8 8 . . . . .\n"
-". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .\n";
-". . . . . . . . . . . . Press any key to continue . . . . . . . . . . . . .\n";
+". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .\n"
+". . . . . . . . . . . . PRESS ANY KEY TO CONTINUE . . . . . . . . . . . . .\n";
 
-int main()
-{
-    	Guide();
-	delay(100);
-	system("cls");
-}
+const string Guide =
+"\t\t\tGame instructions:\n\n"
+"\t<!> Use the navigation buttons to move:\n\n"
+"\t\t+ Up:    W or I\n\n"
+"\t\t+ Down:  S or K\n\n"
+"\t\t+ Right: D or L\n\n"
+"\t\t+ Left:  A or J\n\n"
+"\t<!> Press ESC to exit the game.\n\n"
+"\t\t\tGood luck !!! (^_^)\n\n\n"
+"\t\tPRESS ANY KEY TO CONTINUE";
 
-void Guide()
-{
-	cout << "\t\t\tGame instructions:\n\n"
-		 << "\t<!> Use the navigation buttons to move:\n\n"
-		 << "\t\t+ Up:    "<< (char)24 <<"\n\n"
-		 << "\t\t+ Down:  "<< (char)25 <<"\n\n"
-		 << "\t\t+ Right: "<< (char)26 <<"\n\n"
-		 << "\t\t+ Left:  "<< (char)27 << "\n\n"
-		 << "\t<!> Press ESC to exit the game.\n\n"
-		 << "\t\t\tGood luck !!! (^_^)\n\n\n";
-}
 
 void gotoxy(int x,int y)
 {
-	HANDLE hConsoleOutput;
-	COORD Cursor_an_Pos = { x,y};
-	hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleCursorPosition(hConsoleOutput , Cursor_an_Pos);
+    HANDLE hConsoleOutput;
+    COORD Cursor_an_Pos = { x,y};
+    hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleCursorPosition(hConsoleOutput , Cursor_an_Pos);
 }
-void DrawTheFrame()
+void clrscr()
 {
-    for(int i=0;i<=20;i++)  {
-        for(int j=0;j<=40;j++)  {
+	CONSOLE_SCREEN_BUFFER_INFO	csbiInfo;
+	HANDLE	hConsoleOut;
+	COORD	Home = { 0, 0 };
+	DWORD	dummy;
+
+	hConsoleOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	GetConsoleScreenBufferInfo(hConsoleOut, &csbiInfo);
+
+	FillConsoleOutputCharacter(hConsoleOut, ' ', csbiInfo.dwSize.X * csbiInfo.dwSize.Y, Home, &dummy);
+	csbiInfo.dwCursorPosition.X = 0;
+	csbiInfo.dwCursorPosition.Y = 0;
+	SetConsoleCursorPosition(hConsoleOut, csbiInfo.dwCursorPosition);
+}
+void drawTheFrame()
+{
+    for(int i=0;i<=16;i++)  {
+        for(int j=0;j<=32;j++)  {
             if(i==0 && j==0)
             {
                 gotoxy(j,i);
                 cout<<char(-55);
             }
-            else if(i==20 && j==0)
+            else if(i==16 && j==0)
             {
                 gotoxy(j,i);
                 cout<<char(-56);
             }
-            else if(i==0 && j==40)
+            else if(i==0 && j==32)
             {
                 gotoxy(j,i);
                 cout<<char(-69);
             }
-            else if(i==20&&j==40)
+            else if(i==16 && j==32)
             {
                 gotoxy(j,i);
                 cout<<char(-68);
             }
-            else if((i==5 || i==10 || i==15) && j==0)
+            else if((i==4 || i==8 || i==12) && j==0)
             {
                 gotoxy(j,i);
                 cout<<char(-52);
             }
-            else if((i==5 || i==10 || i==15) && j==40)
+            else if((i==4 || i==8 || i==12) && j==32)
             {
                 gotoxy(j,i);
                 cout<<char(-71);
             }
-            else if(i==0&&(j==10||j==20||j==30))
+            else if(i==0&&(j==8||j==16||j==24))
             {
                 gotoxy(j,i);
                 cout<<char(-53);
             }
-            else if(i==20 && (j==10 || j==20 || j==30))
+            else if(i==16 && (j==8 || j==16 || j==24))
             {
                 gotoxy(j,i);
                 cout<<char(-54);
             }
-            else if((i==5 || i==10 || i==15) && ( j==10 || j==20 || j==30))
+            else if((i==4 || i==8 || i==12) && ( j==8 || j==16 || j==24))
             {
                 gotoxy(j,i);
                 cout<<char(-50);
             }
-            else if(i==5 || i==10 || i==15)
+            else if(i==4 || i==8 || i==12)
             {
                 gotoxy(j,i);
                 cout<<char(-51);
             }
-            else if(i==0 || i==20)
+            else if(i==0 || i==16)
             {
                 gotoxy(j,i);
                 cout<<char(-51);
             }
-            else if(j==10 || j==20 || j==30)
+            else if(j==8 || j==16 || j==24)
             {
                 gotoxy(j,i);
                 cout<<char(-70);
             }
-            else if(j==0 || j==40)
+            else if(j==0 || j==32)
             {
                 gotoxy(j,i);
                 cout<<char(-70);
@@ -119,9 +122,45 @@ void DrawTheFrame()
         }
     }
 }
-int generateRandomNumber()
+void begin()
 {
-    int k= rand() % 50 + 1;
-    if (k%3==0) return 4;
-    else return 2;
+    srand(time(NULL));
+    int temp[4];
+    temp[0]=rand()%4;
+    temp[1]=rand()%4;
+
+    do
+    {
+        temp[2]=rand()%4;
+        temp[3]=rand()%4;
+    }
+    while (temp[0]==temp[2] && temp[1]==temp[3]);
+
+    boardGame[temp[0]][temp[1]]=(rand()%2+1)*2;
+    boardGame[temp[2]][temp[3]]=(rand()%2+1)*2;
 }
+void fillTheBoard()
+{
+    for(int i=0;i<4;i++)
+        for(int j=0;j<4;j++)
+        {
+            gotoxy(4+j*8,2+i*4);
+            cout<<boardGame[i][j];
+        }
+
+}
+
+int main ()
+{
+    cout<<Logo;
+    getch();
+    clrscr();
+    cout<<Guide;
+    getch();
+    clrscr();
+    begin();
+    drawTheFrame();
+    fillTheBoard();
+    gotoxy(20,20);
+}
+
