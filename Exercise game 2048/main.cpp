@@ -4,6 +4,9 @@
 #include "setting.h"
 #include "WinOrLose.h"
 
+#define ConsoleLength 85 // Chieu dai man hinh console
+#define ConsoleWidth 25  // Chieu rong man hinh console
+
 int main ()
 {
     int matrixGame[4][4]={0},temp[4];
