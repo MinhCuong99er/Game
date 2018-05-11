@@ -3,9 +3,10 @@
 #include "console2048.h"
 #include "setting.h"
 #include "WinOrLose.h"
+#include <MMSystem.h>
 
-#define ConsoleLength 85   // Chieu dai man hinh console
-#define ConsoleWidth 45   // Chieu rong man hinh console
+#define WidthConsole   700  // Chieu dai man hinh console
+#define HeightConsole  400  // Chieu rong man hinh console
 
 int main ()
 {
@@ -13,12 +14,14 @@ int main ()
  	int scoreGame=0,bestScoreGame,statusOfGame=1;
  	int randomNumber1,randomNumber2,randomNumber3;
     bool stopCondition;
-
+    
+    resizeConsole(WidthConsole, HeightConsole);
     hideCursor();
     prepare();
     bestScore(bestScoreGame);
     start(array,matrixGame);
     display(matrixGame,scoreGame,bestScoreGame);
+    
     do{
         control(matrixGame,array,scoreGame,bestScoreGame,statusOfGame,randomNumber1,randomNumber2,randomNumber3);
         update(matrixGame,scoreGame,bestScoreGame,statusOfGame,stopCondition);
