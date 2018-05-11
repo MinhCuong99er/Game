@@ -15,15 +15,20 @@ bool emptyBoard(int matrix[4][4])
     }
     return false;
 }
-bool gameOver(int matrix[4][4],int &status, bool condition)
+bool gameOver(int matrix[4][4],int &status,bool condition)
 {
     if (status == 0 || status == 2) return true;
     for (int i=0; i<3; i++)
     {
-		for (int j=0; j<3; j++)
-		{
-			if (matrix[i][j]==matrix[i][j+1] || matrix[i][j]==matrix[i+1][j])
-				condition = true;
+    	if (matrix[i][3]==matrix[i+1][3]) condition = true;
+    	else
+    	{
+			for (int j=0; j<3; j++)
+			{
+				if (matrix[3][j]==matrix[3][j+1]) condition =  true;
+				else if (matrix[i][j]==matrix[i][j+1] || matrix[i][j]==matrix[i+1][j])
+					condition = true;
+			}
 		}
 	}
 	if (!emptyBoard(matrix) && !condition) return true;
@@ -35,12 +40,10 @@ void losed(int &bestScore)
     Game.open("score.txt",ios::out);
     Game<<bestScore;
     Game.close();
-    gotoxy(47,6);
+    gotoxy(31,26);
     cout<<"GAME OVER!!!";
-    gotoxy(0,20);
+    gotoxy(0,40);
     system("pause");
-    clrscr();
-    gotoxy(0,20);
     setText(Face);
 }
 void victory()
