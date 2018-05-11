@@ -4,26 +4,26 @@
 #include "setting.h"
 #include "WinOrLose.h"
 
-#define ConsoleLength 85 // Chieu dai man hinh console
-#define ConsoleWidth 25  // Chieu rong man hinh console
+#define ConsoleLength 85   // Chieu dai man hinh console
+#define ConsoleWidth 45   // Chieu rong man hinh console
 
 int main ()
 {
-    int matrixGame[4][4]={0},temp[4];
- 	int count=0,scoreGame=0,bestScoreGame,statusOfGame=1;
-    bool stopCondition=false;
+    int matrixGame[4][4]={0},array[4];
+ 	int scoreGame=0,bestScoreGame,statusOfGame=1;
+ 	int randomNumber1,randomNumber2,randomNumber3;
+    bool stopCondition;
 
     hideCursor();
     prepare();
     bestScore(bestScoreGame);
-    start(temp,matrixGame);
-    fillTheBoard(matrixGame,scoreGame,bestScoreGame);
-
+    start(array,matrixGame);
+    display(matrixGame,scoreGame,bestScoreGame);
     do{
-        control(matrixGame,scoreGame,bestScoreGame,count,statusOfGame);
+        control(matrixGame,array,scoreGame,bestScoreGame,statusOfGame,randomNumber1,randomNumber2,randomNumber3);
         update(matrixGame,scoreGame,bestScoreGame,statusOfGame,stopCondition);
-        drawTheFrame();
-        fillTheBoard(matrixGame,scoreGame,bestScoreGame);
+        draw();
+        display(matrixGame,scoreGame,bestScoreGame);
     }
     while (!gameOver(matrixGame,statusOfGame,stopCondition));
 
@@ -31,7 +31,7 @@ int main ()
         victory();
     else if (statusOfGame==2 || gameOver(matrixGame,statusOfGame,stopCondition))
         losed(bestScoreGame);
+    getch();
     return 0;
 }
-
 
