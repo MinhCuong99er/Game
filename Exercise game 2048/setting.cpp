@@ -9,16 +9,9 @@
 
 using namespace std;
 
-int generateRandomNumber(int &randomNumber)
-{
-    srand(time(NULL));
-    randomNumber = rand() % 100;
-    if (randomNumber%10==0) return 4;
-    else return 2;
-}
 void start(int temp[4],int matrix[4][4])
 {
-    drawTheFrame();
+    draw();
     srand(time(NULL));
     temp[0] = rand()%4;
     temp[1] = rand()%4;
@@ -39,9 +32,8 @@ void bestScore(int &bestScore)
     Game >> bestScore;
     Game.close();
 }
-void turnLeft(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
+void turnLeft(int matrix[4][4],int &score,int &bestScore,int &status)
 {
-    count=1;
     for(int k=0;k<3;k++)
     {
         for(int i=0;i<4;i++)
@@ -52,7 +44,6 @@ void turnLeft(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
                 {
                     matrix[i][j]=matrix[i][j+1];
                     matrix[i][j+1]=0;
-                    count++;
                 }
             }
         }
@@ -71,7 +62,6 @@ void turnLeft(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
                 matrix[m][n]*=2;
                 matrix[m][n+1]=0;
                 score += matrix[m][n];
-                count++;
             }
         }
     }
@@ -86,22 +76,9 @@ void turnLeft(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
             }
         }
     }
-    if(matrix[0][3]*matrix[1][3]*matrix[2][3]*matrix[3][3]==0 && count!=0)
-    {
-        int random,number;
-        srand(time(NULL));
-        do
-        {
-            random=rand()%4;
-        }
-        while (matrix[random][3]!=0);
-        matrix[random][3]=generateRandomNumber(number);
-    }
-    count=1;
 }
-void turnRight(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
+void turnRight(int matrix[4][4],int &score,int &bestScore,int &status)
 {
-    count=1;
     for(int k=0;k<3;k++)
     {
         for(int i=0;i<4;i++)
@@ -112,7 +89,6 @@ void turnRight(int matrix[4][4],int &score,int &bestScore,int &count,int &status
                 {
                     matrix[i][j] = matrix[i][j-1];
                     matrix[i][j-1] = 0;
-                    count++;
                 }
             }
         }
@@ -131,7 +107,6 @@ void turnRight(int matrix[4][4],int &score,int &bestScore,int &count,int &status
                 matrix[m][n] *= 2;
                 matrix[m][n-1] = 0;
                 score += matrix[m][n];
-                count++;
             }
         }
     }
@@ -146,22 +121,9 @@ void turnRight(int matrix[4][4],int &score,int &bestScore,int &count,int &status
             }
         }
     }
-    if(matrix[0][0]*matrix[1][0]*matrix[2][0]*matrix[3][0]==0 && count!=0)
-    {
-        int random,number;
-        srand(time(NULL));
-        do
-        {
-            random=rand()%4;
-        }
-        while (matrix[random][0]!=0);
-        matrix[random][0]=generateRandomNumber(number);
-    }
-    count=1;
 }
-void goUp(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
+void goUp(int matrix[4][4],int &score,int &bestScore,int &status)
 {
-    count=1;
     for(int k=0;k<3;k++)
     {
         for(int i=0;i<3;i++)
@@ -172,7 +134,6 @@ void goUp(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
                 {
                     matrix[i][j] = matrix[i+1][j];
                     matrix[i+1][j] = 0;
-                    count++;
                 }
             }
         }
@@ -191,7 +152,6 @@ void goUp(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
                 matrix[m][n]*=2;
                 matrix[m+1][n] = 0;
                 score += matrix[m][n];
-                count++;
             }
         }
     }
@@ -206,22 +166,9 @@ void goUp(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
             }
         }
     }
-    if(matrix[3][0]*matrix[3][1]*matrix[3][2]*matrix[3][3]==0&&count!=0)
-    {
-        int random,number;
-        srand(time(NULL));
-        do
-        {
-            random=rand()%4;
-        }
-        while(matrix[3][random] != 0);
-        matrix[3][random] = generateRandomNumber(number);
-    }
-    count=1;
 }
-void goDown(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
+void goDown(int matrix[4][4],int &score,int &bestScore,int &status)
 {
-    count=1;
     for(int k=0;k<3;k++)
     {
         for(int i=3;i>0;i--)
@@ -232,7 +179,6 @@ void goDown(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
                 {
                     matrix[i][j]=matrix[i-1][j];
                     matrix[i-1][j]=0;
-                    count++;
                 }
             }
         }
@@ -251,7 +197,6 @@ void goDown(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
                 matrix[m][n] *= 2;
                 matrix[m-1][n] = 0;
                 score += matrix[m][n];
-                count++;
             }
         }
     }
@@ -266,48 +211,70 @@ void goDown(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
             }
         }
     }
-    if(matrix[0][0]*matrix[0][1]*matrix[0][2]*matrix[0][3]==0 && count!=0)
+}
+void generateRandomNumber(int matrix[4][4],int &number1,int &number2,int &number3)
+{
+    if (emptyBoard(matrix))
     {
-        int random,number;
         srand(time(NULL));
         do
         {
-            random=rand()%4;
-        }
-        while(matrix[0][random]!=0);
-        matrix[0][random]=generateRandomNumber(number);
-    }
-    count=1;
-}
+            number1=rand()%4;
+            number2=rand()%4;
+        } while (matrix[number1][number2]!=0);
 
-void control(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
+        srand(time(NULL));
+        number3 = rand() % 101;
+        (number3%10==0) ? matrix[number1][number2]=4 : matrix[number1][number2]=2;
+    }
+}
+void replayGame(int matrix[4][4],int temp [4],int &score)
+{
+    for(int i=0;i<4;i++)
+    {
+        for(int j=0;j<4;j++)
+            matrix[i][j]=0;
+    }
+    score=0;
+    start(temp,matrix);
+}
+void control(int matrix[4][4],int temp [4],int &score,int &bestScore,int &status,int &number1,int &number2,int &number3)
 {
     char keys = _getch();
     switch (keys)
     {
-        case 'w': case 72:
+        case 'w': case 'W':
         {
-            goUp(matrix,score,bestScore,count,status);
+            goUp(matrix,score,bestScore,status);
+            generateRandomNumber(matrix,number1,number2,number3);
             break;
         }
-        case 's': case 80:
+        case 's': case 'S':
         {
-            goDown(matrix,score,bestScore,count,status);
+            goDown(matrix,score,bestScore,status);
+            generateRandomNumber(matrix,number1,number2,number3);
             break;
         }
-        case 'a': case 75:
+        case 'a': case 'A':
         {
-            turnLeft(matrix,score,bestScore,count,status);
+            turnLeft(matrix,score,bestScore,status);
+            generateRandomNumber(matrix,number1,number2,number3);
             break;
         }
-        case 'd': case 77:
+        case 'd': case 'D':
         {
-            turnRight(matrix,score,bestScore,count,status);
+            turnRight(matrix,score,bestScore,status);
+            generateRandomNumber(matrix,number1,number2,number3);
             break;
         }
         case 27:
         {
             status = 2;
+            break;
+        }
+        case 'r': case 'R':
+        {
+            replayGame(matrix,temp,score);
             break;
         }
     }
