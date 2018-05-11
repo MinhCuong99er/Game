@@ -35,8 +35,7 @@ const string Face =
 void setText(string text);
 void prepare ();
 void setColour(int &colour);
-void drawTheFrame();
-void fillTheBoard(int matrix[4][4], int &score, int &bestScore);
-
+void draw();
+void display(int matrix[4][4], int &score, int &bestScore);
 
 #endif //DRAW_H
