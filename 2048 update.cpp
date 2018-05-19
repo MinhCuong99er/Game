@@ -5,13 +5,15 @@
 #include<ctime>
 #include<fstream>
 
-#define BoardLength 24
-#define BoardWidth 16
+#define BoardLength 24       // Chieu dai bang
+#define BoardWidth 16       // Chieu rong bang
+#define ConsoleLength 85   // Chieu dai man hinh console
+#define ConsoleWidth 45   // Chieu rong man hinh console
 
 using namespace std;
 
 const string Logo =
-    "\n\n\n\n\n                                                         \n"
+    "\n\n\n\n\n\n\n\n\n\n\n\n                                           \n"
     "\t\t  2 2 2           0 0 0                 4 4         8 8 8 8 8  \n"
     "\t\t2       2       0       0             4   4       8           8\n"
     "\t\t        2     0           0         4     4       8           8\n"
@@ -20,58 +22,47 @@ const string Logo =
     "\t\t  2             0       0                 4       8           8\n"
     "\t\t2 2 2 2 2         0 0 0                   4         8 8 8 8 8  \n";
 const string Guide =
-    "\t\t\tGame instructions:\n\n"
-    "\t<!> Use the navigation buttons to move:\n\n"
-    "\t\t+ Up:    W \n\n"
-    "\t\t+ Down:  S \n\n"
-    "\t\t+ Right: D \n\n"
-    "\t\t+ Left:  A \n\n"
-    "\t<!> Press ESC to exit the game.\n\n"
-    "\t\t\tGood luck !!! (^_^)\n\n\n"
-    "\t\tREADY!!! GO  --->>> ";
+    "\n\n\n\n\n\n\n\n\n                       \n\n"
+    "\t\t\t\tGame instructions:                 \n\n"
+    "\t\t<!> Use the navigation buttons to move:\n\n"
+    "\t\t\t+ Up:    W                           \n\n"
+    "\t\t\t+ Down:  S                           \n\n"
+    "\t\t\t+ Right: D                           \n\n"
+    "\t\t\t+ Left:  A                           \n\n"
+    "\t\t<!> Press ESC to exit the game.        \n\n"
+    "\t\t<!> Press R to restart the game.        \n\n"
+    "\t\t\t\tGood luck !!! (^_^)\n              \n\n"
+    "\t\t\tREADY!!! GO  --->>> ";
 const string BoardHand=
-    "  +----------------------------------+   \n"
-    "\t\t\t\t      |                                  |      \n"
-    "\t\t\t\t      |        Best Score:               |      \n"
-    "\t\t\t\t      |                                  |      \n"
-    "\t\t\t\t    _ |        Your Score:               | _    \n"
-    "\t\t\t\t   (o)|                                  |(o)   \n"
-    "\t\t\t\t  ( { |                                  | } )  \n"
-    "\t\t\t\t ( (_ |                                  | _) ) \n"
-    "\t\t\t\t((# {)+----------------------------------+(} #))\n"
-    "\t\t\t\t(### {_} }                            { {_} ###)\n"
-    "\t\t\t\t {      }                              {      } \n"
-    "\t\t\t\t  {____}                                {____}  \n"
-    "\t\t\t\t  |    |                                |    |  \n"
-    "\t\t\t\t  |    |                                |    |  \n"
-    "\t\t\t\t  |    |                                |    |  \n"
-    "\t\t\t\t  |    |                                |    |  \n"
-    "\t\t\t\t  |    |                                |    |  \n"
-    "\t\t\t\t  (____)                                (____)  \n";
-const string Face =
-    "                          \n"
-    "       xxxxxxxxxxxx       \n"
-    "      xxxxxxxxxxxxxx      \n"
-    "     xxxxxxxxxxxxxxxx     \n"
-    "     xxxxxxxxxxxxxxxx     \n"
-    "    xxxxxxxxxxxxxxxxxx    \n"
-    "    xxxxxxxxxxxxxxxxxx    \n"
-    "   xxxxxTTTxxxxTTTxxxxx   \n"
-    "     xxx   xxxx   xxx     \n"
-    "     xxx   xxxx   xxx     \n"
-    "      xx___xxxx___xx      \n"
-    "      xxxxxxxxxxxxxx      \n"
-    "       xxxxx  xxxxx       \n"
-    "        xxxxxxxxxx        \n"
-    "        xxxxxxxxxx        \n"
-    "         x      x         \n"
-    "         xx    xx         \n"
-    "          xxxxxx          \n"
-    "            xx            \n"
-    "                          \n"
-    "        YOU LOSED!        \n";
+    "\t\t      +-------------------------------------+   \n"
+    "\t\t      |                                     |      \n"
+    "\t\t      |        Best Score:                  |      \n"
+    "\t\t      |                                     |      \n"
+    "\t\t    _ |        Your Score:                  | _    \n"
+    "\t\t   (o)|                                     |(o)   \n"
+    "\t\t  ( { |                                     | } )  \n"
+    "\t\t ( (_ |                                     | _) ) \n"
+    "\t\t((# {)+-------------------------------------+(} #))\n"
+    "\t\t(### {_} }                               { {_} ###)\n"
+    "\t\t {      }                                 {      } \n"
+    "\t\t  {____}                                   {____}  \n"
+    "\t\t  |    |                                   |    |  \n"
+    "\t\t  |    |                                   |    |  \n"
+    "\t\t  |    |                                   |    |  \n"
+    "\t\t  |    |                                   |    |  \n"
+    "\t\t  |    |                                   |    |  \n"
+    "\t\t  (____)                                   (____)  \n";
+const string Board =
+    "\n\n\n\n\n\n\n\n\n\n                             \n"
+    "\t\t      +-------------------------------------+\n"
+    "\t\t      |                                     |\n"
+    "\t\t      |          YOU LOSE !!!               |\n"
+    "\t\t      |                                     |\n"
+    "\t\t      |     Your Score is :                 |\n"
+    "\t\t      |                                     |\n"
+    "\t\t      +-------------------------------------+\n";
 
-void gotoxy(int x,int y)
+void gotoxy(short x,short y)
 {
     HANDLE hConsoleOutput;
     COORD Cursor_an_Pos = {x,y};
@@ -91,7 +82,7 @@ void clrscr()
     csbiInfo.dwCursorPosition.Y = 0;
     SetConsoleCursorPosition(hConsoleOut, csbiInfo.dwCursorPosition);
 }
-void textColor(int color)
+void textColor(int color)                   // Ham to mau chu
 {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }
@@ -104,11 +95,11 @@ void hideCursor()
     ConCurInf.bVisible = FALSE;
     SetConsoleCursorInfo(hOut, &ConCurInf);
 }
-void setText(string text)
+void setText(string text)                                   // Ham tao mau cho 1 chuoi ky tu
 {
     while(1)
     {
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE) , rand() % 15);
+        textColor(rand() % 15);
         cout<<text;
         if(kbhit())
         {
@@ -119,106 +110,134 @@ void setText(string text)
         clrscr();
     }
 }
-
-void prepare ()
+void prepare ()                                             // Ham in Logo va huong dan
 {
     setText(Logo);
     clrscr();
     setText(Guide);
     clrscr();
 }
-void setColour(int &colour)
+void setColour(int &colour)                                 // Ham cai dat mau cho so
 {
     switch (colour)
     {
-
-        case 2:     textColor(15); break;
-        case 4:     textColor(14); break;
-        case 8:     textColor(13); break;
-        case 16:    textColor(12); break;
-        case 32:    textColor(11); break;
-        case 64:    textColor(10); break;
-        case 128:   textColor(9);  break;
-        case 256:   textColor(8);  break;
-        case 512:   textColor(7);  break;
-        case 1024:  textColor(6);  break;
-        case 2048:  textColor(5);  break;
-        default:    textColor(4);
+        case 2:     textColor(62);  break;
+        case 4:     textColor(61);  break;
+        case 8:     textColor(60);  break;
+        case 16:    textColor(59);  break;
+        case 32:    textColor(58);  break;
+        case 64:    textColor(57);  break;
+        case 128:   textColor(56);  break;
+        case 256:   textColor(55);  break;
+        case 512:   textColor(54);  break;
+        case 1024:  textColor(53);  break;
+        case 2048:  textColor(52);  break;
+        default:    textColor(51);
     }
 }
-void drawTheFrame()
+void draw()                                                 // Ham ve khung
 {
-    gotoxy(36,0);
-    textColor(3);
-    cout<<BoardHand;
-    textColor(2);
-
-    for(int i=0;i<=BoardWidth;i++)
+    gotoxy(0,0);
+    for(int line=0;line<=BoardWidth;line++)
     {
-        for(int j=0;j<=BoardLength;j++)
+    	for(int column=0;column<=BoardLength;column++)
         {
-        	gotoxy(j,i);
-            if(i==0 && j==0)
+            gotoxy(column+29,line+2);
+            if(line==0 && column==0)
+            {
+                textColor(15);
                 cout<<char(-55);
-            else if(i==16 && j==0)
+            }
+            else if(line==16 && column==0)
+            {
+                textColor(15);
                 cout<<char(-56);
-            else if(i==0 && j==24)
+            }
+            else if(line==0 && column==24)
+            {
+                textColor(15);
                 cout<<char(-69);
-            else if(i==16 && j==24)
+            }
+            else if(line==16 && column==24)
+            {
+                textColor(15);
                 cout<<char(-68);
-            else if((i==4 || i==8 || i==12) && j==0)
+            }
+            else if(line%4==0 && column==0)
+            {
+                textColor(15);
                 cout<<char(-52);
-            else if((i==4 || i==8 || i==12) && j==24)
+            }
+            else if(line%4==0 && column==24)
+            {
+                textColor(15);
                 cout<<char(-71);
-            else if(i==0 && (j==6 || j==12 || j==18))
+            }
+            else if(line==0 && column%6==0)
+            {
+                textColor(15);
                 cout<<char(-53);
-            else if(i==16 && (j==6 || j==12 || j==18))
+            }
+            else if(line==16 && column%6==0)
+            {
+                textColor(15);
                 cout<<char(-54);
-            else if((i==4 || i==8 || i==12) && (j==6||j==12||j==18))
+            }
+            else if(line%4==0 && column%6==0)
+            {
+                textColor(15);
                 cout<<char(-50);
-            else if(i==0 || i==4 || i==8 || i==12 || i==16)
+            }
+            else if(line%4==0)
+            {
+                textColor(15);
                 cout<<char(-51);
-            else if(j==0 || j==6 || j==12 || j==18 || j==24)
+            }
+            else if(column%6==0)
+            {
+                textColor(15);
                 cout<<char(-70);
+            }
+            else if (line%4!=0 && column%6!=0)
+            {
+                textColor(51);
+                cout<<char(219);
+            }
         }
     }
+    gotoxy(0,20);
+    textColor(14);
+    cout<<BoardHand;
 }
-void fillTheBoard(int matrix[4][4], int &score, int &bestScore)
+void display(int matrix[4][4], int &score, int &bestScore)  // Ham dien so
 {
-    for(int i=0;i<4;i++)
+    for(int line=0;line<4;line++)
     {
-        for(int j=0;j<4;j++)
+        for(int column=0;column<4;column++)
         {
-            setColour(matrix[i][j]);
-            if (matrix[i][j]<100 && matrix[i][j]!=0)
+            setColour(matrix[line][column]);
+            if (matrix[line][column]<100 && matrix[line][column]!=0)
             {
-                gotoxy(3+j*6,2+i*4);
-                cout<<matrix[i][j];
+                gotoxy(32+column*6,4+line*4);
+                cout<<matrix[line][column];
             }
-            else if ((matrix[i][j]>100 && matrix[i][j]!=0))
+            else if ((matrix[line][column]>100 && matrix[line][column]!=0))
             {
-                gotoxy(2+j*6,2+i*4);
-                cout<<matrix[i][j];
+                gotoxy(31+column*6,4+line*4);
+                cout<<matrix[line][column];
             }
         }
     }
-    textColor(1);
-    gotoxy(59,4);
+    gotoxy(43,24);
+    textColor(15);
     cout<<score;
-    textColor(4);
-    gotoxy(59,2);
+    textColor(12);
+    gotoxy(43,22);
     cout<<bestScore;
 }
-int generateRandomNumber(int &randomNumber)
+void start(int temp[4],int matrix[4][4])                    // Bat dau tro choi
 {
-    srand(time(NULL));
-    randomNumber = rand() % 100;
-    if (randomNumber%10==0) return 4;
-    else return 2;
-}
-void start(int temp[4],int matrix[4][4])
-{
-    drawTheFrame();
+    draw();
     srand(time(NULL));
     temp[0] = rand()%4;
     temp[1] = rand()%4;
@@ -232,273 +251,230 @@ void start(int temp[4],int matrix[4][4])
     matrix[temp[0]][temp[1]] = 2;
     matrix[temp[2]][temp[3]] = 2;
 }
-void bestScore(int &bestScore)
+void bestScore(int &bestScore)                              // Cap nhat diem cao nhat
 {
     fstream Game;
     Game.open("score.txt",ios::in);
     Game >> bestScore;
     Game.close();
 }
-void turnLeft(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
+void turnLeft(int matrix[4][4],int &score)                  // Di chuyen cac o so ve ben trai
 {
     for(int k=0;k<3;k++)
     {
-        for(int i=0;i<4;i++)
+        for(int line=0;line<4;line++)
         {
-            for(int j=0;j<3;j++)
+            for(int column=0;column<3;column++)
             {
-                if(matrix[i][j]==0)
-                {
-                    matrix[i][j]=matrix[i][j+1];
-                    matrix[i][j+1]=0;
-                    count++;
-                }
+                if(matrix[line][column]==0)
+                    swap(matrix[line][column],matrix[line][column+1]);
             }
         }
     }
-    for(int m=0;m<4;m++)
+    for(int line=0;line<4;line++)
     {
-        for(int n=0;n<3;n++)
+        for(int column=0;column<3;column++)
         {
-            if(matrix[m][n] == 2048)
+            if(matrix[line][column] == matrix[line][column+1])
             {
-                status = 0;
-                break;
-            }
-            else if(matrix[m][n] == matrix[m][n+1])
-            {
-                matrix[m][n]*=2;
-                matrix[m][n+1]=0;
-                score += matrix[m][n];
-                count++;
+                matrix[line][column]*=2;
+                matrix[line][column+1]=0;
+                score += matrix[line][column];
             }
         }
     }
-    for(int p=0;p<4;p++)
+    for(int line=0;line<4;line++)
     {
-        for(int q=0;q<3;q++)
+        for(int column=0;column<3;column++)
         {
-            if(matrix[p][q]==0)
-            {
-                matrix[p][q]=matrix[p][q+1];
-                matrix[p][q+1]=0;
-            }
+            if(matrix[line][column]==0)
+                swap(matrix[line][column],matrix[line][column+1]);
         }
     }
-    if(matrix[0][3]*matrix[1][3]*matrix[2][3]*matrix[3][3]==0 && count!=0)
-    {
-        int random,number;
-        srand(time(NULL));
-        do
-        {
-            random=rand()%4;
-        }
-        while (matrix[random][3]!=0);
-        matrix[random][3]=generateRandomNumber(number);
-    }
-    count=0;
 }
-void turnRight(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
+void turnRight(int matrix[4][4],int &score)                 // Di chuyen cac o so ve ben phi
 {
     for(int k=0;k<3;k++)
     {
-        for(int i=0;i<4;i++)
+        for(int line=0;line<4;line++)
         {
-            for(int j=3;j>0;j--)
+            for(int column=3;column>0;column--)
             {
-                if(matrix[i][j] == 0)
-                {
-                    matrix[i][j] = matrix[i][j-1];
-                    matrix[i][j-1] = 0;
-                    count++;
-                }
+                if(matrix[line][column] == 0)
+                    swap(matrix[line][column],matrix[line][column-1]);
             }
         }
     }
-    for(int m=0;m<4;m++)
+    for(int line=0;line<4;line++)
     {
-        for(int n=3;n>0;n--)
+        for(int column=3;column>0;column--)
         {
-            if(matrix[m][n] == 2048)
+            if(matrix[line][column] == matrix[line][column-1])
             {
-                status = 0;
-                break;
-            }
-            else if(matrix[m][n] == matrix[m][n-1])
-            {
-                matrix[m][n] *= 2;
-                matrix[m][n-1] = 0;
-                score += matrix[m][n];
-                count++;
+                matrix[line][column] *= 2;
+                matrix[line][column-1] = 0;
+                score += matrix[line][column];
             }
         }
     }
-    for(int p=0;p<4;p++)
+    for(int line=0;line<4;line++)
     {
-        for(int q=3;q>0;q--)
+        for(int column=3;column>0;column--)
         {
-            if(matrix[p][q]==0)
-            {
-                matrix[p][q] = matrix[p][q-1];
-                matrix[p][q-1] = 0;
-            }
+            if(matrix[line][column]==0)
+                swap(matrix[line][column],matrix[line][column-1]);
         }
     }
-    if(matrix[0][0]*matrix[1][0]*matrix[2][0]*matrix[3][0]==0 && count!=0)
-    {
-        int random,number;
-        srand(time(NULL));
-        do
-        {
-            random=rand()%4;
-        }
-        while (matrix[random][0]!=0);
-        matrix[random][0]=generateRandomNumber(number);
-    }
-    count=0;
 }
-void goUp(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
+void goUp(int matrix[4][4],int &score)                      // Di chuyen cac o so len tren
 {
     for(int k=0;k<3;k++)
     {
-        for(int i=0;i<3;i++)
+        for(int line=0;line<3;line++)
         {
-            for(int j=0;j<4;j++)
+            for(int column=0;column<4;column++)
             {
-                if(matrix[i][j]==0)
-                {
-                    matrix[i][j] = matrix[i+1][j];
-                    matrix[i+1][j] = 0;
-                    count++;
-                }
+                if(matrix[line][column]==0)
+                    swap(matrix[line][column],matrix[line+1][column]);
             }
         }
     }
-    for(int m=0;m<3;m++)
+    for(int line=0;line<3;line++)
     {
-        for(int n=0;n<4;n++)
+        for(int column=0;column<4;column++)
         {
-            if(matrix[m][n] == 2048)
+            if(matrix[line][column]==matrix[line+1][column])
             {
-                status = 0;
-                break;
-            }
-            else if(matrix[m][n]==matrix[m+1][n])
-            {
-                matrix[m][n]*=2;
-                matrix[m+1][n] = 0;
-                score += matrix[m][n];
-                count++;
+                matrix[line][column]*=2;
+                matrix[line+1][column] = 0;
+                score += matrix[line][column];
             }
         }
     }
-    for(int p=0;p<3;p++)
+    for(int line=0;line<3;line++)
     {
-        for(int q=0;q<4;q++)
-           {
-            if(matrix[p][q]==0)
-            {
-                matrix[p][q]=matrix[p+1][q];
-                matrix[p+1][q]=0;
-            }
-        }
-    }
-    if(matrix[3][0]*matrix[3][1]*matrix[3][2]*matrix[3][3]==0&&count!=0)
-    {
-        int random,number;
-        srand(time(NULL));
-        do
+        for(int column=0;column<4;column++)
         {
-            random=rand()%4;
+            if(matrix[line][column]==0)
+                swap(matrix[line][column],matrix[line+1][column]);
         }
-        while(matrix[3][random] != 0);
-        matrix[3][random] = generateRandomNumber(number);
     }
-    count=0;
 }
-void goDown(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
+void goDown(int matrix[4][4],int &score)                    // Di chuyen cac o so xuong duoi
 {
     for(int k=0;k<3;k++)
     {
-        for(int i=3;i>0;i--)
+        for(int line=3;line>0;line--)
         {
-            for(int j=0;j<4;j++)
+            for(int column=0;column<4;column++)
             {
-                if(matrix[i][j] == 0)
-                {
-                    matrix[i][j]=matrix[i-1][j];
-                    matrix[i-1][j]=0;
-                    count++;
-                }
+                if(matrix[line][column]==0)
+                    swap(matrix[line][column],matrix[line-1][column]);
             }
         }
     }
-    for(int m=3;m>0;m--)
+    for(int line=3;line>0;line--)
     {
-        for(int n=0;n<4;n++)
+        for(int column=0;column<4;column++)
         {
-            if(matrix[m][n] == 2048)
+            if(matrix[line][column]==matrix[line-1][column])
             {
-                status = 0;
-                break;
-            }
-            else if(matrix[m][n] == matrix[m-1][n])
-            {
-                matrix[m][n] *= 2;
-                matrix[m-1][n] = 0;
-                score += matrix[m][n];
-                count++;
+                matrix[line][column]*=2;
+                matrix[line-1][column]=0;
+                score+=matrix[line][column];
             }
         }
     }
-    for(int p=3;p>0;p--)
+    for(int line=3;line>0;line--)
     {
-        for(int q=0;q<4;q++)
+        for(int column=0;column<4;column++)
         {
-            if(matrix[p][q]==0)
-            {
-                matrix[p][q]=matrix[p-1][q];
-                matrix[p-1][q]=0;
-            }
+            if(matrix[line][column]==0)
+            swap(matrix[line][column],matrix[line-1][column]);
         }
     }
-    if(matrix[0][0]*matrix[0][1]*matrix[0][2]*matrix[0][3]==0 && count!=0)
+}
+void creCheck(int matrix[4][4], int boardCheck[4][4])       // Gan gia tri cho mang can kiem tra
+{
+    for (int line=0;line<4;line++)
     {
-        int random,number;
+	for (int column=0;column<4;column++)
+            boardCheck[line][column] = matrix[line][column];
+    }
+}
+bool checkMove(int matrix[4][4], int boardCheck[4][4])      // Kiem tra sau khi dieu khien xem mang co bi dich chuyen hay khong
+{
+    for (int line=0;line<4;line++)
+    {
+	for (int column=0;column<4;column++)
+		if (boardCheck[line][column] != matrix[line][column]) return true;
+    }
+    return false;
+}
+bool emptyBoard(int matrix[4][4])                           // Kiem tra xem co con o trong
+{
+    for (int line=0;line<4;line++)
+    {
+        for (int column=0;column<4;column++)
+        {
+            if (matrix[line][column]==0) return true;
+        }
+    }
+    return false;
+}
+void generateRandomNumber(int matrix[4][4],int boardCheck[4][4],int &number1,int &number2,int &number3) // Tao so ngau nhien
+{
+    if (emptyBoard(matrix) && checkMove(matrix,boardCheck))
+    {
         srand(time(NULL));
         do
         {
-            random=rand()%4;
+            number1=rand()%4;
+            number2=rand()%4;
         }
-        while(matrix[0][random]!=0);
-        matrix[0][random]=generateRandomNumber(number);
+        while (matrix[number1][number2]!=0);
+        srand(time(NULL));
+        number3 = rand() % 101;
+        (number3%10==0) ? matrix[number1][number2]=4 : matrix[number1][number2]=2;
     }
-    count=0;
 }
-
-void control(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
+void restartGame(int matrix[4][4],int temp [4],int &score)  // Choi moi
+{
+    for(int line=0;line<4;line++)
+    {
+        for(int column=0;column<4;column++)
+            matrix[line][column]=0;
+    }
+    score=0;
+    start(temp,matrix);
+}
+void control(int matrix[4][4],int boardCheck[4][4],int temp [4],int &status,int &score,int &number1,int &number2,int &number3)  // Dieu khien
 {
     char keys = _getch();
     switch (keys)
     {
-        case 'w': case 72:
+        case 'w': case 'W':
         {
-            goUp(matrix,score,bestScore,count,status);
+            goUp(matrix,score);
+            generateRandomNumber(matrix,boardCheck,number1,number2,number3);
             break;
         }
-        case 's': case 80:
+        case 's': case 'S':
         {
-            goDown(matrix,score,bestScore,count,status);
+            goDown(matrix,score);
+            generateRandomNumber(matrix,boardCheck,number1,number2,number3);
             break;
         }
-        case 'a': case 75:
+        case 'a': case 'A':
         {
-            turnLeft(matrix,score,bestScore,count,status);
+            turnLeft(matrix,score);
+            generateRandomNumber(matrix,boardCheck,number1,number2,number3);
             break;
         }
-        case 'd': case 77:
+        case 'd': case 'D':
         {
-            turnRight(matrix,score,bestScore,count,status);
+            turnRight(matrix,score);
+            generateRandomNumber(matrix,boardCheck,number1,number2,number3);
             break;
         }
         case 27:
@@ -506,87 +482,103 @@ void control(int matrix[4][4],int &score,int &bestScore,int &count,int &status)
             status = 2;
             break;
         }
-    }
-}
-bool EmptyBoard(int matrix[4][4])
-{
-    for (int i=0;i<4;i++)
-    {
-        for (int j=0;j<4;j++)
+        case 'r': case 'R':
         {
-            if (matrix[i][j]==0) return true;
+            restartGame(matrix,temp,score);
+            break;
         }
     }
-    return false;
 }
-bool gameOver(int matrix[4][4],int &status, bool condition)
+void checkWin(int matrix[4][4],int &status)
 {
-    if (status == 0 || status == 2) return true;
-    for (int i=0; i<3; i++)
+    for(int line=0;line<4;line++)
     {
-		for (int j=0; j<3; j++)
+        for(int column=0;column<4;column++)
+            if (matrix[line][column]==2048)
+                status=0;
+    }
+}
+bool checkLose(int matrix[4][4],int &status,bool condition)
+{
+    if (status==2) return true;
+    for (int line=0; line<3; line++)
+    {
+    	if (matrix[line][3]==matrix[line+1][3]) condition = true;
+    	else
+    	{
+		for (int column=0; column<3; column++)
 		{
-			if (matrix[i][j]==matrix[i][j+1] || matrix[i][j]==matrix[i+1][j])
+			if (matrix[3][column]==matrix[3][column+1]) condition =  true;
+			else if (matrix[line][column]==matrix[line][column+1] || matrix[line][column]==matrix[line+1][column])
 				condition = true;
 		}
 	}
-	if (!EmptyBoard(matrix) && !condition) return true;
-	else return false;
+     }
+     if (!emptyBoard(matrix) && !condition) return true;
+     else return false;
 }
-void update(int matrix[4][4], int &score,int &bestScore,int &status,bool condition)
+void update(int matrix[4][4],int &score,int &bestScore,int &status,bool condition)  // Cap nhat diem cao
 {
-    if (score>bestScore  && !gameOver(matrix,status,condition))
+    if (score>bestScore  && !checkLose(matrix,status,condition))
     {
         bestScore=score;
-        ofstream  Game;
+        ofstream Game;
         Game.open("score.txt",ios::out);
         Game<<bestScore;
         Game.close();
     }
 }
-void losed(int &bestScore)
+void gameOver(int &bestScore, int &score)
 {
     ofstream  Game;
     Game.open("score.txt",ios::out);
     Game<<bestScore;
     Game.close();
-    gotoxy(47,6);
+    gotoxy(31,26);
+    textColor(11);
     cout<<"GAME OVER!!!";
-    Sleep(2000);
+    getch();
     clrscr();
-    gotoxy(0,20);
-    setText(Face);
-
+    gotoxy(0,0);
+    cout<<Board;
+    gotoxy(44,15);
+    textColor(10);
+    cout<<score;
+    gotoxy(0,18);
 }
 void victory ()
 {
+    gotoxy(0,0);
     setText("\n\n\n\n\n\t\tCONGRALULATIONS. YOU WIN!!!");
 }
 
 int main ()
 {
-    int matrixGame[4][4]={0},temp[4];
- 	int count=0,scoreGame=0,bestScoreGame,statusOfGame=1;
+    int matrixGame[4][4]={0},boardCheckGame[4][4],array[4];
+    int scoreGame=0,bestScoreGame,statusOfGame=1;
+    int randomNumber1,randomNumber2,randomNumber3;
     bool stopCondition;
 
     hideCursor();
     prepare();
     bestScore(bestScoreGame);
-    start(temp,matrixGame);
-    fillTheBoard(matrixGame,scoreGame,bestScoreGame);
+    start(array,matrixGame);
+    display(matrixGame,scoreGame,bestScoreGame);
     do{
-        control(matrixGame,scoreGame,bestScoreGame,count,statusOfGame);
+        control(matrixGame,boardCheckGame,array,statusOfGame,scoreGame,randomNumber1,randomNumber2,randomNumber3);
         update(matrixGame,scoreGame,bestScoreGame,statusOfGame,stopCondition);
-        drawTheFrame();
-        fillTheBoard(matrixGame,scoreGame,bestScoreGame);
+        checkWin(matrixGame,statusOfGame);
+        draw();
+        display(matrixGame,scoreGame,bestScoreGame);
     }
-    while (!gameOver(matrixGame,statusOfGame,stopCondition));
+    while (!checkLose(matrixGame,statusOfGame,stopCondition));
 
     if (statusOfGame==0)
         victory();
-    else if (statusOfGame==2 || gameOver(matrixGame,statusOfGame,stopCondition))
-        losed(bestScoreGame);
+    else if (statusOfGame==2 || checkLose(matrixGame,statusOfGame,stopCondition))
+    {
+        gameOver(bestScoreGame,scoreGame);
+    }
     getch();
     return 0;
 }
-
