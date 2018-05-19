@@ -1,0 +1,65 @@
+# depslib dependency file v1.0
+1526020808 source:e:\95\2048\console2048.cpp
+	<iostream>
+	<windows.h>
+	"console2048.h"
+
+1525181568 e:\95\2048\console2048.h
+
+1526623182 source:e:\95\2048\draw.cpp
+	<windows.h>
+	<conio.h>
+	"Draw.h"
+	"console2048.h"
+
+1526623182 e:\95\2048\draw.h
+	<iostream>
+	"console2048.h"
+
+1526020808 source:f:\2048\console2048.cpp
+	<iostream>
+	<windows.h>
+	"console2048.h"
+
+1525181568 f:\2048\console2048.h
+
+1526694192 source:f:\2048\draw.cpp
+	<windows.h>
+	<conio.h>
+	"Draw.h"
+	"console2048.h"
+
+1526694498 f:\2048\draw.h
+	<iostream>
+	"console2048.h"
+
+1526626302 source:f:\2048\setting.cpp
+	<windows.h>
+	<ctime>
+	<fstream>
+	<conio.h>
+	"setting.h"
+	"Draw.h"
+	"WinOrLose.h"
+	"Console2048.h"
+
+1526627792 f:\2048\setting.h
+
+1526694042 f:\2048\winorlose.h
+
+1526694220 source:f:\2048\winorlose.cpp
+	<windows.h>
+	<fstream>
+	<conio.h>
+	<iostream>
+	"setting.h"
+	"Draw.h"
+	"Console2048.h"
+
+1526623178 source:f:\2048\main.cpp
+	<conio.h>
+	"Draw.h"
+	"console2048.h"
+	"setting.h"
+	"WinOrLose.h"
+
