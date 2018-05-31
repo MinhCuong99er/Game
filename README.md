@@ -13,4 +13,4 @@
 *	Hướng phát triển trò chơi trong tương lai:
     +	Tính thời gian chơi.
     +	Lưu lại 5 điểm cao nhất.
-    +	Phát triển chơi 2 người: tạo 2 lưới ô vuông và 2 người chơi có thể chơi lần lươt hoặc cùng một lúc. Người giành chiến thắng là người sau khi kết thúc lượt chơi có số điểm cao hơn.
+    +	Phát triển chơi 2 người: tạo 2 lưới ô vuông. Người chơi 1 sử dụng các phím W,A,S,D còn người chơi 2 sử dụng các phím mũi tên để di chuyển. 2 người chơi có thể chơi lần lươt hoặc cùng một lúc. Người giành chiến thắng là người sau khi kết thúc lượt chơi có số điểm cao hơn.
